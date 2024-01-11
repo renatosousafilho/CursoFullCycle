@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: "goserver"
+  labels:
+    app:  "goserver"
+spec:
+  selector:
+    matchLabels:
+      app: "goserver"
+  replicas: 10
+  # Especificação do pod
+  template:
+    metadata:
+      labels:
+        app: "goserver"
+    spec:
+      containers:
+        - name: "goserver"
+          image: "renatofh/hello-go"
