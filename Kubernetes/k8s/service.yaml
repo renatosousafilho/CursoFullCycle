@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "goserver"
+spec:
+  selector:
+    app: "goserver" # Selecionar os pods que tem como label o nome "goserver"
+  type: NodePort # Tipo de serviço (NodePort, ClusterIP, LoadBalancer)
+  ports:
+    - name: goserver-service
+      port: 80
+      protocol: TCP
