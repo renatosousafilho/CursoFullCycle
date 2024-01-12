@@ -17,4 +17,4 @@ spec:
     spec:
       containers:
         - name: "goserver"
-          image: "renatofh/hello-go:v3"
+          image: "renatofh/hello-go:v4"
