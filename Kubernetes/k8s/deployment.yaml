@@ -17,4 +17,9 @@ spec:
     spec:
       containers:
         - name: "goserver"
-          image: "renatofh/hello-go:v4"
+          image: "renatofh/hello-go:v5"
+          env:
+            - name: NAME
+              value: "Renato"
+            - name: AGE
+              value: "32"
