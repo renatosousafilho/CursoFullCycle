@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: "goserver"
-  replicas: 10
+  replicas: 1
   # Especificação do pod
   template:
     metadata:
@@ -18,6 +18,14 @@ spec:
       containers:
         - name: "goserver-container"
           image: "renatofh/hello-go:v8"
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            periodSeconds: 5 # define o intervalo de tempo entre as requisições
+            failureThreshold: 3 # define o número de falhas consecutivas para considerar o container como não saudável
+            timeoutSeconds: 10 # define o tempo limite para a verificação
+            successThreshold: 1 # define o número de sucessos consecutivos para considerar o container como saudável
           envFrom:
             - configMapRef:
                 name: goserver-env
