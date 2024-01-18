@@ -25,19 +25,23 @@ spec:
             periodSeconds: 3 # define o intervalo de tempo entre as requisições
             failureThreshold: 1 # define o número de falhas consecutivas para considerar o container como não saudável
             initialDelaySeconds: 10 # define o tempo para iniciar a verificação
-          # livenessProbe:
-          #   httpGet:
-          #     path: /healthz
-          #     port: 8000
-          #   periodSeconds: 5 # define o intervalo de tempo entre as requisições
-          #   failureThreshold: 3 # define o número de falhas consecutivas para considerar o container como não saudável
-          #   timeoutSeconds: 10 # define o tempo limite para a verificação
-          #   successThreshold: 1 # define o número de sucessos consecutivos para considerar o container como saudável
+          
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            periodSeconds: 5 # define o intervalo de tempo entre as requisições
+            failureThreshold: 1 # define o número de falhas consecutivas para considerar o container como não saudável
+            timeoutSeconds: 1 # define o tempo limite para a verificação
+            successThreshold: 1 # define o número de sucessos consecutivos para considerar o container como saudável
+            initialDelaySeconds: 15 # define o tempo para iniciar a verificação
+          
           envFrom:
             - configMapRef:
                 name: goserver-env
             - secretRef:
                 name: goserver-secret
+          
           volumeMounts:
             - mountPath: "/go/myfamily"
               name: config
