@@ -17,14 +17,23 @@ spec:
     spec:
       containers:
         - name: "goserver-container"
-          image: "renatofh/hello-go:v8.1"
+          image: "renatofh/hello-go:v8.2"
+
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            # Multiplica 3 * 30 = 90 segundos para considerar o container como não iniciado
+            periodSeconds: 3 # define o intervalo de tempo entre as requisições
+            failureThreshold: 30 # define o número de falhas consecutivas para considerar o container como não saudável
+            
           readinessProbe:
             httpGet:
               path: /healthz
               port: 8000
             periodSeconds: 3 # define o intervalo de tempo entre as requisições
             failureThreshold: 1 # define o número de falhas consecutivas para considerar o container como não saudável
-            initialDelaySeconds: 10 # define o tempo para iniciar a verificação
+            # initialDelaySeconds: 10 # define o tempo para iniciar a verificação
           
           livenessProbe:
             httpGet:
@@ -34,7 +43,7 @@ spec:
             failureThreshold: 1 # define o número de falhas consecutivas para considerar o container como não saudável
             timeoutSeconds: 1 # define o tempo limite para a verificação
             successThreshold: 1 # define o número de sucessos consecutivos para considerar o container como saudável
-            initialDelaySeconds: 15 # define o tempo para iniciar a verificação
+            # initialDelaySeconds: 15 # define o tempo para iniciar a verificação
           
           envFrom:
             - configMapRef:
