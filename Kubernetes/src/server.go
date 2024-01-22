@@ -40,18 +40,21 @@ func Secret(w http.ResponseWriter, r *http.Request) {
 }
 
 func Healthz(w http.ResponseWriter, r *http.Request) {
-	duration := time.Since(startedAt)
+	w.WriteHeader(200)
+	w.Write([]byte("OK"))
+	
+	// duration := time.Since(startedAt)
 
-	if duration.Seconds() < 10 {
-		w.WriteHeader(500)
-		w.Write([]byte(fmt.Sprintf("Application are starting: %v", duration.Seconds())))
-	} 
+	// if duration.Seconds() < 10 {
+	// 	w.WriteHeader(500)
+	// 	w.Write([]byte(fmt.Sprintf("Application are starting: %v", duration.Seconds())))
+	// } 
 
-	if duration.Seconds() > 25 {
-		w.WriteHeader(500)
-		w.Write([]byte(fmt.Sprintf("Duation: %v", duration.Seconds())))
-	} else {
-		w.WriteHeader(200)
-		w.Write([]byte("OK"))
-	}
+	// if duration.Seconds() > 25 {
+	// 	w.WriteHeader(500)
+	// 	w.Write([]byte(fmt.Sprintf("Duation: %v", duration.Seconds())))
+	// } else {
+	// 	w.WriteHeader(200)
+	// 	w.Write([]byte("OK"))
+	// }
 }
