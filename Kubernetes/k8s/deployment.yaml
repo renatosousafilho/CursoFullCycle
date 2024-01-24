@@ -58,10 +58,15 @@ spec:
                 name: goserver-secret
           
           volumeMounts:
+            - mountPath: "/go/pvc"
+              name: goserver-volume
             - mountPath: "/go/myfamily"
               name: config
               readOnly: true # não permite escrita
       volumes:
+        - name: goserver-volume
+          persistentVolumeClaim:
+            claimName: goserver-pvc
         - name: config
           configMap:
             name: configmap-family
