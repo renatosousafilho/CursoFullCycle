@@ -5,6 +5,7 @@ metadata:
   labels:
     app: mysql
 spec:
+  serviceName: mysql-h
   replicas: 3
   podManagementPolicy: Parallel # define a política de gerenciamento de pods para acontecer em paralelo
   selector:

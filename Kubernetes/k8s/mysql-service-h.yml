@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "mysql-h"
+spec:
+  selector:
+    app: "mysql" # Selecionar os pods que tem como label o nome "goserver"
+  ports:
+    - port: 3306
+  clusterIP: None # Define que o serviço não terá um IP interno, pois será acessado apenas internamente pelo cluster
