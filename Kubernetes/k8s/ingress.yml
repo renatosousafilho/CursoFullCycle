@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-host
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "ingress.fullcycle.com.br"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/admin"
+        backend:
+          service:
+            name: goserver-service
+            port:
+              number: 80
+ 

@@ -1,0 +1,3 @@
+helm upgrade --install ingress-nginx default \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace default
