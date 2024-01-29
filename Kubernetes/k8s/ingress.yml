@@ -2,6 +2,9 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-host
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   rules:
@@ -15,4 +18,8 @@ spec:
             name: goserver-service
             port:
               number: 80
+  tls:
+  - hosts:
+    - ingress.fullcycle.com.br
+    secretName: letsencrypt-tls
  
