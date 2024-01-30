@@ -11,6 +11,9 @@ spec:
       labels:
         app: server
     spec:
+      # Vincula esse deployment com um serviceAccount
+      # namespace: prod
+      serviceAccount: server
       containers:
       - name: server
         image: wesleywillians/hello-express
