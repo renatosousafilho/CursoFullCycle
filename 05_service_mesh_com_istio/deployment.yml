@@ -21,26 +21,26 @@ spec:
 
 ---
 
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: nginx-b
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: nginx
-#   template:
-#     metadata:
-#       labels:
-#         app: nginx
-#         version: B
-#     spec:
-#       containers:
-#       - name: nginx
-#         image: wesleywillians/nginx-ab:b
-#         ports:
-#         - containerPort: 80
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-b
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+        version: B
+    spec:
+      containers:
+      - name: nginx
+        image: wesleywillians/nginx-ab:b
+        ports:
+        - containerPort: 80
 
 ---
 
