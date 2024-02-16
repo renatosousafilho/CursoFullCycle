@@ -16,39 +16,31 @@ spec:
       containers:
       - name: nginx
         image: wesleywillians/nginx-ab
-        resources:
-          limits:
-            memory: "100Mi"
-            cpu: "0.05"
         ports:
         - containerPort: 80
 
 ---
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-b
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-        version: B
-    spec:
-      containers:
-      - name: nginx
-        image: wesleywillians/nginx-ab:b
-        resources:
-          limits:
-            memory: "100Mi"
-            cpu: "0.05"
-        ports:
-        - containerPort: 80
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: nginx-b
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: nginx
+#   template:
+#     metadata:
+#       labels:
+#         app: nginx
+#         version: B
+#     spec:
+#       containers:
+#       - name: nginx
+#         image: wesleywillians/nginx-ab:b
+#         ports:
+#         - containerPort: 80
 
 ---
 
@@ -63,5 +55,5 @@ spec:
   ports:
   - port: 8000
     targetPort: 80
-    nodePort: 30000
+    nodePort: 30001
 
