@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: Bets - Championships API
+  version: 2.0.0
+  contact:
+    name: Bets
+    email: bets@example.com
+  license:
+    name: MIT License
+    url: 'https://opensource.org/licenses/MIT'
+servers:
+  -
+    url: 'http://localhost:9999/api'
+    description: Development Environment
+  -
+    url: 'https://bets.api.com'
+    description: Production
+paths:
+  '/championships/{championship-id}':
+    get:
+      tags:
+        - championships
+      parameters:
+        -
+          name: championship-id
+          description: Championship ID
+          schema:
+            format: string
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/championship-data'
+              examples:
+                data:
+                  value:
+                    name: UEFA Champions League
+                    title: Champions League
+                    country: World
+          description: 200 response
+        '404':
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    code: 404
+                    message: not found
+          description: 404 response
+      operationId: get-championship-by-id
+      summary: Get Championship Details
+components:
+  schemas:
+    championship-data:
+      title: Root Type for championship-data
+      description: ''
+      type: object
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        country:
+          type: string
+      example:
+        name: UEFA Champions League
+        title: Champions League
+        country: World
+tags:
+  -
+    name: championships
+    description: Everything about your Championships

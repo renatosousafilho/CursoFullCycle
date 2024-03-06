@@ -1,0 +1,75 @@
+---
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: championships
+        stack: echo
+        interface: rest
+        language: golang
+      name: championships
+    spec:
+      ports:
+        - name: http
+          port: 9999
+          protocol: TCP
+          targetPort: 9999
+      selector:
+        app: championships
+  - apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      labels:
+        version: v1
+        app: championships
+      name: championships
+    spec:
+      replicas: 1
+      revisionHistoryLimit: 2
+      selector:
+        matchLabels:
+          app: championships
+          stack: echo
+          interface: rest
+          language: golang
+      template:
+        metadata:
+          labels:
+            app: championships
+            version: v1
+            stack: echo
+            interface: rest
+            language: golang
+        spec:
+          containers:
+            - image: gcr.io/mvp-mesh-pre-testing/championship:latest
+              imagePullPolicy: Always
+              resources:
+                requests:
+                  memory: "5Mi"
+                  cpu: "50m"
+                limits:
+                  memory: "10Mi"
+                  cpu: "100m"
+              livenessProbe:
+                httpGet:
+                  path: /health
+                  port: 9999
+                  scheme: HTTP
+                initialDelaySeconds: 1
+              name: championships
+              ports:
+                - containerPort: 9999
+                  name: http
+                  protocol: TCP
+              readinessProbe:
+                httpGet:
+                  path: /health
+                  port: 9999
+                  scheme: HTTP
+                initialDelaySeconds: 1
+              securityContext:
+                privileged: false

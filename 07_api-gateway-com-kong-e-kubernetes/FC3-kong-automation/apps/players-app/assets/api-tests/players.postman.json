@@ -1,0 +1,180 @@
+{
+  "_": {
+    "postman_id": "66026db4-89f3-4e8d-ba3e-2ddb0ed6a597"
+  },
+  "item": [
+    {
+      "id": "f0467f4d-7033-4a97-8941-f219ae2cbf3c",
+      "name": "Contract Tests",
+      "item": [
+        {
+          "id": "a815dc43-7037-4608-a85b-a9ef0dd8871e",
+          "name": "players",
+          "item": [
+            {
+              "id": "8c5d58ac-f43e-48a6-8263-fdd0c4297a2a",
+              "name": "Get Player Details",
+              "request": {
+                "name": "Get Player Details",
+                "description": {
+                  "type": "text/plain"
+                },
+                "url": {
+                  "path": [
+                    "players",
+                    ":player-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Player ID",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "anim",
+                      "key": "player-id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET"
+              },
+              "response": [
+                {
+                  "_": {
+                    "postman_previewlanguage": "json"
+                  },
+                  "id": "fcc9433d-60c8-42ff-ae27-3609a30f4466",
+                  "name": "200 response",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "players",
+                        ":player-id"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "(Required) Player ID",
+                            "type": "text/plain"
+                          },
+                          "type": "any",
+                          "value": "anim",
+                          "key": "player-id"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "body": {}
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n  \"name\": \"Joe Doe\",\n  \"email\": \"joe@doe.com\"\n}",
+                  "cookie": []
+                },
+                {
+                  "_": {
+                    "postman_previewlanguage": "json"
+                  },
+                  "id": "dfa10aa9-939f-41be-b743-a74fddcfff92",
+                  "name": "404 response",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "players",
+                        ":player-id"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "(Required) Player ID",
+                            "type": "text/plain"
+                          },
+                          "type": "any",
+                          "value": "anim",
+                          "key": "player-id"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "body": {}
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n  \"code\": 404,\n  \"message\": \"not found\"\n}",
+                  "cookie": []
+                }
+              ],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "e22e3da1-8e7a-45f6-bdb3-c356f2c0e70c",
+                    "type": "text/javascript",
+                    "exec": [
+                      "// Validate status 2xx \npm.test(\"[GET]::/players/:player-id - Status code is 2xx\", function () {\n   pm.response.to.be.success;\n});\n",
+                      "// Validate if response header has matching content-type\npm.test(\"[GET]::/players/:player-id - Content-Type is application/json\", function () {\n   pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\n});\n",
+                      "// Validate if response has JSON Body \npm.test(\"[GET]::/players/:player-id - Response has JSON Body\", function () {\n    pm.response.to.have.jsonBody();\n});\n",
+                      "// Response Validation\nconst schema = {\"title\":\"Root Type for user-data\",\"description\":\"\",\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"email\":{\"type\":\"string\"}},\"example\":{\"name\":\"Joe Doe\",\"email\":\"joe@doe.com\"}}\n\n// Validate if response matches JSON schema \npm.test(\"[GET]::/players/:player-id - Schema is valid\", function() {\n    pm.response.to.have.jsonSchema(schema,{unknownFormats: [\"int32\", \"int64\", \"float\", \"double\"]});\n});\n"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "event": []
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://127.0.0.1:4010",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "66026db4-89f3-4e8d-ba3e-2ddb0ed6a597",
+    "name": "Bets - Players API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Name: Bets\n Email: bets@example.com",
+      "type": "text/plain"
+    }
+  }
+}
