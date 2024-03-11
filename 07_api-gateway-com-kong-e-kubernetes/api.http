@@ -1,0 +1,10 @@
+POST http://localhost/api/bets
+Content-Type: application/json
+
+{
+    "homeTeamScore": "2",
+    "awayTeamScore": "3",
+    "championship": "Chapions League",
+    "match": "Barcelona 2x3 Real Madrid",
+    "email": "joe@doe.com"
+}
