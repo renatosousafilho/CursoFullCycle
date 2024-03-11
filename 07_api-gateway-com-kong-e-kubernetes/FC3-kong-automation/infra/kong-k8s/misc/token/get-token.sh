@@ -7,5 +7,5 @@ curl --location --request POST 'http://keycloak.iam/realms/bets/protocol/openid-
 --data-urlencode 'grant_type=password' \
 --data-urlencode 'username=maria' \
 --data-urlencode 'password=maria' \
---data-urlencode 'client_secret=ohSN0VS9Qtdi5KCLmkj52jGFU91FQJn2' \
+--data-urlencode 'client_secret=KmhQPz3IbwEdusqAGixxlRE8FDfptGu1' \
 --data-urlencode 'scope=openid'

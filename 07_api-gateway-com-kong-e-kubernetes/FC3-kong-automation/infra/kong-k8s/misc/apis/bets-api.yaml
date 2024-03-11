@@ -5,7 +5,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "kong"
     konghq.com/override: do-not-preserve-host
-    # konghq.com/plugins: oidc-bets,rl-by-header,prometheus-bets
+    # Habilita o plugin de OIDC
+    konghq.com/plugins: oidc-bets
 spec:
   rules:
     - http:
