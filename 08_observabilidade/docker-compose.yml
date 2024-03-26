@@ -34,6 +34,17 @@ services:
     networks: 
         - observability
 
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:7.13.0
+    container_name: metricbeat
+    user: root # precisa ser root para ter permissão para ler o arquivo /var/run/docker.sock
+    volumes:      
+      - /var/run/docker.sock:/var/run/docker.sock # compartilha o docker.sock do host com o container
+      - ./beats/metric/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
+    restart: on-failure
+    networks: 
+      - observability
+
 networks:
   observability:
     driver: bridge
