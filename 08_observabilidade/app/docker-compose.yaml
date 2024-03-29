@@ -41,13 +41,15 @@ services:
       networks: 
         - observability
     
-    # nginx:
-    #   build: ../nginx
-    #   container_name: nginx
-    #   ports:
-    #     - "8280:80"
-    #   networks: 
-    #     - observability
+    nginx:
+      build: ../nginx
+      container_name: nginx
+      ports:
+        - 8020:80
+      depends_on:
+        - db
+      networks:
+        - observability
 
 networks:
   observability:
