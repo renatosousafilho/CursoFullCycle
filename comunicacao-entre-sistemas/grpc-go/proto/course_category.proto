@@ -2,6 +2,8 @@ syntax = "proto3";
 package pb;
 option go_package = "internal/pb";
 
+message Empty {}
+
 // 1, 2 e 3 é a ordem que os campos serão serializados
 message Category {
     string id = 1;
@@ -18,6 +20,11 @@ message CategoryResponse {
     Category category = 1;
 }
 
+message CategoryList {
+    repeated Category categories = 1;
+}
+
 service CategoryService {
     rpc CreateCategory(CrateCategoryRequest) returns (CategoryResponse) {}
+    rpc ListCategories(Empty) returns (CategoryList) {}
 }
