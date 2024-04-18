@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"io"
 	"renatosousafilho/grpc-go/internal/database"
 	"renatosousafilho/grpc-go/internal/pb"
 )
@@ -59,4 +60,36 @@ func (c *CategoryService) GetCategory(context context.Context, in *pb.GetCategor
 		Name:        category.Name,
 		Description: category.Description,
 	}, nil
+}
+
+func (c *CategoryService) CreateCategoryStream(stream pb.CategoryService_CreateCategoryStreamServer) error {
+	// Criar uma lista de categorias
+	categories := &pb.CategoryList{}
+
+	for {
+		// Receber a categoria
+		category, err := stream.Recv()
+		// Se não houver mais categorias, encerrar o stream
+		if err == io.EOF {
+			return stream.Send(categories)
+		}
+
+		if err != nil {
+			return err
+		}
+
+		// Salvar a categoria no banco de dados
+		createdCategory, err := c.CategoryDB.Create(category.Name, category.Description)
+
+		if err != nil {
+			return err
+		}
+
+		// Adicionar a categoria na lista
+		categories.Categories = append(categories.Categories, &pb.Category{
+			Id:          createdCategory.ID,
+			Name:        createdCategory.Name,
+			Description: createdCategory.Description,
+		})
+	}
 }
