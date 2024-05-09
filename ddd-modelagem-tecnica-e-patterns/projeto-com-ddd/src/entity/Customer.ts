@@ -1,10 +1,10 @@
 import Address from './Address';
 
 export default class Customer {
-  _id: string;
-  _name: string;
-  _address!: Address;
-  _active: boolean = false;
+  private _id: string;
+  private _name: string;
+  private _address!: Address;
+  private _active: boolean = false;
 
   constructor(id: string, name: string) {
     this._id = id;
@@ -38,5 +38,13 @@ export default class Customer {
 
   changeAddress(address: Address) {
     this._address = address;
+  }
+
+  isActive() {
+    return this._active;
+  }
+
+  get name() {
+    return this._name;
   }
 }

@@ -1,5 +1,40 @@
+import Address from './Address';
+import Customer from './Customer';
+
 describe("Customer", () => {
-  it("should get 1 as result of 1 + 1", () => {
-    expect(1 + 1).toBe(2);
+  it("should thrown an error if the name is empty", () => {
+    expect(() => new Customer("1", "")).toThrowError("Name is required");
+  });
+
+  it("should thrown an error if the id is empty", () => {
+    expect(() => new Customer("", "John Doe")).toThrowError("ID is required");
+  });
+
+  it("should change the name", () => {
+    const customer = new Customer("1", "John Doe");
+    customer.changeName("Jane Doe");
+    expect(customer.name).toBe("Jane Doe");
+  });
+
+  it('should activate the customer', () => {
+    const customer = new Customer('1', 'John Doe');
+    const address = new Address('Main Street', 123, 'Springfield', 'IL', '12345678');
+    customer.changeAddress(address);
+    customer.activate();
+    expect(customer.isActive()).toBeTruthy();
+  });
+
+  it('should deactivate the customer', () => {
+    const customer = new Customer('1', 'John Doe');
+    const address = new Address('Main Street', 123, 'Springfield', 'IL', '12345678');
+    customer.changeAddress(address);
+    customer.activate();
+    customer.deactivate();
+    expect(customer.isActive()).toBeFalsy();
+  });
+
+  it('should thrown an error when activating a customer without address', () => {
+    const customer = new Customer('1', 'John Doe');
+    expect(() => customer.activate()).toThrowError('Address is mandatory to activate the customer');
   });
 });
