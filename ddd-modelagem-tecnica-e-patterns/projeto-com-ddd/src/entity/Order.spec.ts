@@ -16,8 +16,8 @@ describe("Order", () => {
 
   it("should calculate the total of the order", () => {
     const order = new Order("o1", "c1", [
-      new OrderItem("i1", "Item 1", 10),
-      new OrderItem("i2", "Item 2", 20)
+      new OrderItem("i1", "Item 1", 10, 1),
+      new OrderItem("i2", "Item 2", 20, 1)
     ]);
     const total = order.total();
     expect(total).toBe(30);
