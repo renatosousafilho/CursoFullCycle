@@ -99,4 +99,24 @@ describe("CustomerRepository", () => {
     // Assert
     await expect(() => customerRepository.find("1")).rejects.toThrow("Customer not found");
   });
+
+  it("should find all customers", async () => {
+    // Arrange
+    const customerRepository = new CustomerRepository();
+    const customer1 = new Customer("1", "John Doe");
+    const address1 = new Address("Main Street", 123, "Springfield", "IL", "62701");
+    customer1.changeAddress(address1);
+    await customerRepository.create(customer1);
+
+    const customer2 = new Customer("2", "Jane Doe");
+    const address2 = new Address("Main Street", 123, "Springfield", "IL", "62701");
+    customer2.changeAddress(address2);
+    await customerRepository.create(customer2);
+
+    // Act
+    const foundCustomers = await customerRepository.findAll();
+
+    // Assert
+    expect(foundCustomers).toStrictEqual([customer1, customer2]);
+  });
 });

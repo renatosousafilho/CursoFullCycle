@@ -52,7 +52,20 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
     return customer;
   }
 
-  findAll(): Promise<Customer[]> {
-    throw new Error('Method not implemented.');
+  async findAll(): Promise<Customer[]> {
+    const customerModels = await CustomerModel.findAll();
+
+    const customers = customerModels.map((customerModel) => {
+      let customer = new Customer(customerModel.id, customerModel.name);
+      customer.addRewardPoints(customerModel.rewardPoints);
+      const address = new Address(customerModel.street, customerModel.number, customerModel.city, customerModel.state, customerModel.zipcode);
+      customer.changeAddress(address);
+      if (customerModel.active) {
+        customer.activate();
+      }
+      return customer;
+    });
+
+    return customers;
   }
 }
