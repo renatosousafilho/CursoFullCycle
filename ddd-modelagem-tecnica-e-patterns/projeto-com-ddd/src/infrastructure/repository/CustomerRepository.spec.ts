@@ -7,7 +7,7 @@ import CustomerModel from '../db/sequelize/model/CustomerModel';
 describe("CustomerRepository", () => {
   let sequelize: Sequelize;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     sequelize = new Sequelize({
       dialect: "sqlite",
       storage: ":memory:",
@@ -20,7 +20,7 @@ describe("CustomerRepository", () => {
     await sequelize.sync();
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await sequelize.close();
   });
 
@@ -44,6 +44,7 @@ describe("CustomerRepository", () => {
       street: customer.address.street,
       number: customer.address.number,
       city: customer.address.city,
+      state: customer.address.state,
       zipcode: customer.address.zipCode,
     });
   });
@@ -70,7 +71,32 @@ describe("CustomerRepository", () => {
       street: customer.address.street,
       number: customer.address.number,
       city: customer.address.city,
+      state: customer.address.state,
       zipcode: customer.address.zipCode,
     });
+  });
+
+  it("should find a customer", async () => {
+    // Arrange
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer("1", "John Doe");
+    const address = new Address("Main Street", 123, "Springfield", "IL", "62701");
+    customer.changeAddress(address);
+    await customerRepository.create(customer);
+
+    // Act
+    const foundCustomer = await customerRepository.find("1");
+
+    // Assert
+    expect(foundCustomer).toStrictEqual(customer);
+  });
+
+  it("should throw an error when customer is not found", async () => {
+    // Arrange
+    const customerRepository = new CustomerRepository();
+
+    // Act
+    // Assert
+    await expect(() => customerRepository.find("1")).rejects.toThrow("Customer not found");
   });
 });
