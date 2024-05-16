@@ -38,4 +38,24 @@ export default class Address {
       throw new Error('Zip code must have 8 characters');
     }
   }
+
+  get street() {
+    return this._street;
+  }
+
+  get number() {
+    return this._number;
+  }
+
+  get city() {
+    return this._city;
+  }
+
+  get state() {
+    return this._state;
+  }
+
+  get zipCode() {
+    return this._zipCode;
+  }
 }
