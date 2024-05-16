@@ -15,8 +15,21 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
       rewardPoints: entity.rewardPoints,
     });
   }
-  update(entity: Customer): Promise<void> {
-    throw new Error('Method not implemented.');
+  
+  async update(entity: Customer): Promise<void> {
+    await CustomerModel.update({
+      name: entity.name,
+      street: entity.address.street,
+      number: entity.address.number,
+      zipcode: entity.address.zipCode,
+      city: entity.address.city,
+      active: entity.isActive(),
+      rewardPoints: entity.rewardPoints,
+    }, {
+      where: {
+        id: entity.id,
+      },
+    });
   }
   find(id: string): Promise<Customer> {
     throw new Error('Method not implemented.');

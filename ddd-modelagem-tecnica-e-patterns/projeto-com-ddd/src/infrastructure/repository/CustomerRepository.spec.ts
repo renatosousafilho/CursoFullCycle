@@ -47,4 +47,30 @@ describe("CustomerRepository", () => {
       zipcode: customer.address.zipCode,
     });
   });
+
+  it("should update a customer", async () => {
+    // Arrange
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer("2", "Jane Doe");
+    const address = new Address("Main Street", 123, "Springfield", "IL", "62701");
+    customer.changeAddress(address);
+    await customerRepository.create(customer);
+
+    // Act
+    customer.changeName("Jane Smith");
+    await customerRepository.update(customer);
+
+    // Assert
+    const updatedCustomer = await CustomerModel.findOne({ where: { id: "2" }});
+    expect(updatedCustomer.toJSON()).toStrictEqual({
+      id: "2",
+      name: customer.name,
+      active: customer.isActive(),
+      rewardPoints: customer.rewardPoints,
+      street: customer.address.street,
+      number: customer.address.number,
+      city: customer.address.city,
+      zipcode: customer.address.zipCode,
+    });
+  });
 });
