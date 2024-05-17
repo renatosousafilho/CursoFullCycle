@@ -2,10 +2,9 @@ import SendEmailWhenProductIsCreatedHandler from '../product/handler/SendEmailWh
 import EventDispatcher from './EventDispatcher';
 
 describe('Domain event test', () => {
-  it.only('should test event dispatcher', () => {
+  it('should register a handler for a specific event', () => {
     const eventDispatcher = new EventDispatcher();
     const eventHandler = new SendEmailWhenProductIsCreatedHandler();
-
     eventDispatcher.register('ProductCreatedEvent', eventHandler);
 
     expect(
@@ -19,5 +18,24 @@ describe('Domain event test', () => {
     expect(
       eventDispatcher.findHandlersForEvent('ProductCreatedEvent')
     ).toContain(eventHandler);
+  });
+
+  it('should unregister a handler for a specific event', () => {
+    const eventDispatcher = new EventDispatcher();
+    const eventHandler = new SendEmailWhenProductIsCreatedHandler();
+    eventDispatcher.register('ProductCreatedEvent', eventHandler);
+    eventDispatcher.unregister('ProductCreatedEvent', eventHandler);
+
+    expect(
+      eventDispatcher.findHandlersForEvent('ProductCreatedEvent')
+    ).toBeDefined();
+
+    expect(
+      eventDispatcher.findHandlersForEvent('ProductCreatedEvent')?.size
+    ).toBe(0);
+
+    expect(
+      eventDispatcher.findHandlersForEvent('ProductCreatedEvent')
+    ).not.toContain(eventHandler);
   });
 });

@@ -23,7 +23,10 @@ export default class EventDispatcher implements EventDispatcherInterface {
     this.eventHandlers.get(event).add(handler);
   }
   unregister(event: string, handler: EventHandlerInterface<EventInterface>): void {
-    throw new Error('Method not implemented.');
+    if (!this.eventHandlers.has(event)) {
+      return;
+    }
+    this.eventHandlers.get(event).delete(handler);
   }
   unregisterAll(): void {
     throw new Error('Method not implemented.');
