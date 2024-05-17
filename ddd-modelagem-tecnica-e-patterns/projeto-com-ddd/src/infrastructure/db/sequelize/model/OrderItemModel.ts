@@ -24,8 +24,7 @@ export default class OrderItemModel extends Model {
   @Column({ allowNull: false })
   declare order_id: string;
 
-  // Se deixar essa linha, o teste falha
-  // ReferenceError: Cannot access 'OrderModel' before initialization
+  // https://forum.code.education/forum/topico/referenceerror-cannot-access-ordermodel-before-initialization-3131/
   @BelongsTo(() => OrderModel)
   declare order: Awaited<OrderModel>;
 
