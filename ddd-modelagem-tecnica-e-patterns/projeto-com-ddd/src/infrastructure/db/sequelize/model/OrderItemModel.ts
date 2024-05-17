@@ -26,8 +26,8 @@ export default class OrderItemModel extends Model {
 
   // Se deixar essa linha, o teste falha
   // ReferenceError: Cannot access 'OrderModel' before initialization
-  // @BelongsTo(() => OrderModel)
-  // declare order: OrderModel;
+  @BelongsTo(() => OrderModel)
+  declare order: Awaited<OrderModel>;
 
   @Column({ allowNull: false })
   declare quantity: number;
