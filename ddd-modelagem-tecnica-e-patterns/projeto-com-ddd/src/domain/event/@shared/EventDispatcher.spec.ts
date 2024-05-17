@@ -38,4 +38,15 @@ describe('Domain event test', () => {
       eventDispatcher.findHandlersForEvent('ProductCreatedEvent')
     ).not.toContain(eventHandler);
   });
+
+  it('should unregister all event handlers', () => {
+    const eventDispatcher = new EventDispatcher();
+    const eventHandler = new SendEmailWhenProductIsCreatedHandler();
+    eventDispatcher.register('ProductCreatedEvent', eventHandler);
+    eventDispatcher.unregisterAll();
+
+    expect(
+      eventDispatcher.findHandlersForEvent('ProductCreatedEvent')
+    ).toBeUndefined();
+  });
 });
