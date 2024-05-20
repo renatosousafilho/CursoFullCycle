@@ -1,6 +1,7 @@
+import CustomerInterface from './CustomerInterface';
 import Address from './Address';
 
-export default class Customer {
+export default class Customer implements CustomerInterface {
   private _id: string;
   private _name: string;
   private _address!: Address;
