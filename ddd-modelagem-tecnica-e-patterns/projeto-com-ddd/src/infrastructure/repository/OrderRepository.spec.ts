@@ -7,11 +7,11 @@ import CustomerRepository from './CustomerRepository';
 import ProductRepository from './ProductRepository';
 import OrderRepository from './OrderRepository';
 
-import Customer from '../../domain/entity/Customer';
-import Address from '../../domain/entity/Address';
-import Product from '../../domain/entity/Product';
-import Order from '../../domain/entity/Order';
-import OrderItem from '../../domain/entity/OrderItem';
+import Customer from '../../domain/customer/entity/Customer';
+import Address from '../../domain/customer/entity/Address';
+import Product from '../../domain/product/entity/Product';
+import Order from '../../domain/checkout/entity/Order';
+import OrderItem from '../../domain/checkout/entity/OrderItem';
 
 
 
