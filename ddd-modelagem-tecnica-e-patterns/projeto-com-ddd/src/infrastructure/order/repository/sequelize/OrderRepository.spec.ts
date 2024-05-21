@@ -154,4 +154,31 @@ describe('OrderRepository', () => {
       }]
     });
   });
+
+  it('should find an order by id', async () => {
+    // Arrange
+    // Create a customer
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer("1", "John Doe");
+    const address = new Address("Main Street", 123, "Springfield", "IL", "62701");
+    customer.changeAddress(address);
+    await customerRepository.create(customer);
+    
+    // Create a product
+    const productRepository = new ProductRepository();
+    const product = new Product("1", "Book", 10);
+    await productRepository.create(product);
+
+    // Create an order
+    const orderItem = new OrderItem("1", product.id, product.name, product.price, 2);
+    const order = new Order("1", customer.id, [orderItem]);
+    const orderRepository = new OrderRepository();
+    await orderRepository.create(order);
+
+    // Act
+    const orderFound = await orderRepository.findById(order.id);
+
+    // Assert
+    expect(orderFound).toStrictEqual(order);
+  });
 });
