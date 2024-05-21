@@ -1,9 +1,10 @@
 import Order from '../../../../domain/checkout/entity/Order';
 import OrderItem from '../../../../domain/checkout/entity/OrderItem';
+import OrderRepositoryInterface from '../../../../domain/checkout/repository/OrderRepositoryInterface';
 import OrderItemModel from './OrderItemModel';
 import OrderModel from './OrderModel';
 
-export default class OrderRepository  {
+export default class OrderRepository implements OrderRepositoryInterface {
   async create(entity: Order): Promise<void> {
     await OrderModel.create({
       id: entity.id,
@@ -43,7 +44,7 @@ export default class OrderRepository  {
     }
   }
 
-  async findById(id: string): Promise<Order | null> {
+  async find(id: string): Promise<Order | null> {
     const order = await OrderModel.findByPk(id, { include: OrderItemModel });
     if (!order) {
       return null;
@@ -60,5 +61,20 @@ export default class OrderRepository  {
         item.quantity,
       )),
     );
+  }
+
+  async findAll(): Promise<Order[]> {
+    const orders = await OrderModel.findAll({ include: OrderItemModel });
+    return orders.map(order => new Order(
+      order.id,
+      order.customer_id,
+      order.items.map(item => new OrderItem(
+        item.id,
+        item.product_id,
+        item.name,
+        item.price,
+        item.quantity,
+      )),
+    ));
   }
 }
