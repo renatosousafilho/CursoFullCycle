@@ -13,8 +13,6 @@ import Product from '../../../../domain/product/entity/Product';
 import Order from '../../../../domain/checkout/entity/Order';
 import OrderItem from '../../../../domain/checkout/entity/OrderItem';
 
-
-
 describe('OrderRepository', () => {
   let sequelize: Sequelize;
 
@@ -65,6 +63,94 @@ describe('OrderRepository', () => {
         quantity: orderItem.quantity,
         order_id: order.id,
         product_id: orderItem.productId,
+      }]
+    });
+  });
+
+  it('should update the customer of an order', async () => {
+    // Arrange
+    // Create a customer
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer("1", "John Doe");
+    const address = new Address("Main Street", 123, "Springfield", "IL", "62701");
+    customer.changeAddress(address);
+    await customerRepository.create(customer);
+    
+    // Create a product
+    const productRepository = new ProductRepository();
+    const product = new Product("1", "Book", 10);
+    await productRepository.create(product);
+
+    // Create an order
+    const orderItem = new OrderItem("1", product.id, product.name, product.price, 2);
+    const order = new Order("1", customer.id, [orderItem]);
+    const orderRepository = new OrderRepository();
+    await orderRepository.create(order);
+
+    // Act
+    const customer2 = new Customer("2", "Jane Doe");
+    const address2 = new Address("Main Street", 123, "Springfield", "IL", "62701");
+    customer2.changeAddress(address2);
+    await customerRepository.create(customer2);
+    order.changeCustomer(customer2.id);
+    await orderRepository.update(order);
+
+    // Assert
+    const orderFound = await OrderModel.findByPk(order.id, { include: OrderItemModel });
+    expect(orderFound.toJSON()).toStrictEqual({
+      id: '1',
+      customer_id: customer2.id,
+      total: 20,
+      items: [{
+        id: orderItem.id,
+        name: orderItem.name,
+        price: orderItem.price,
+        quantity: orderItem.quantity,
+        order_id: order.id,
+        product_id: orderItem.productId,
+      }]
+    });
+  });
+
+  it('should update the items of an order', async () => {
+    // Arrange
+    // Create a customer
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer("1", "John Doe");
+    const address = new Address("Main Street", 123, "Springfield", "IL", "62701");
+    customer.changeAddress(address);
+    await customerRepository.create(customer);
+    
+    // Create a product
+    const productRepository = new ProductRepository();
+    const product = new Product("1", "Book", 10);
+    await productRepository.create(product);
+
+    // Create an order
+    const orderItem = new OrderItem("1", product.id, product.name, product.price, 2);
+    const order = new Order("1", customer.id, [orderItem]);
+    const orderRepository = new OrderRepository();
+    await orderRepository.create(order);
+
+    // Act
+    const product2 = new Product("2", "Notebook", 15);
+    await productRepository.create(product2);
+    order.changeItem(orderItem.id, product2.id, product2.name, product2.price, 1);
+    await orderRepository.update(order);
+
+    // Assert
+    const orderFound = await OrderModel.findByPk(order.id, { include: OrderItemModel });
+    expect(orderFound.toJSON()).toStrictEqual({
+      id: '1',
+      customer_id: customer.id,
+      total: 15,
+      items: [{
+        id: orderItem.id,
+        name: "Notebook",
+        price: 15,
+        quantity: 1,
+        order_id: order.id,
+        product_id: "2",
       }]
     });
   });

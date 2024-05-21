@@ -29,6 +29,22 @@ export default class Order {
     }
   }
 
+  changeCustomer(customerId: string) {
+    this._customerId = customerId;
+    this.validate();
+  }
+
+  changeItem(id: string, productId: string, name: string, price: number, quantity: number) {
+    const item = this._items.find(item => item.id === id);
+    if (item) {
+      item.changeName(name);
+      item.changePrice(price);
+      item.changeProductId(productId);
+      item.changeQuantity(quantity);
+    }
+    this.validate();
+  }
+
   total(): number {
     return this._items.reduce((acc, item) => acc + item.orderItemTotal(), 0);
   }

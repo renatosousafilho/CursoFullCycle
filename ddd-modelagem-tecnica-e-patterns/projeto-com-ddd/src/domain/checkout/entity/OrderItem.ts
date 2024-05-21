@@ -21,6 +21,26 @@ export default class OrderItem {
     }
   }
 
+  changePrice(price: number) {
+    this._price = price;
+    this.validate();
+  }
+
+  changeQuantity(quantity: number) {
+    this._quantity = quantity;
+    this.validate();
+  }
+
+  changeName(name: string) {
+    this._name = name;
+    this.validate();
+  }
+
+  changeProductId(productId: string) {
+    this._productId = productId;
+    this.validate();
+  }
+
   get id() {
     return this._id;
   }
