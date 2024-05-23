@@ -6,7 +6,7 @@ import (
 	"github.com/renatosousafilho/go-hexagonal/application"
 )
 
-func Run(service application.ProductServiceInterface, action string, productID string, productName string, productPrice float64) {
+func Run(service application.ProductServiceInterface, action string, productID string, productName string, productPrice float64) (string, error) {
 	var result = ""
 
 	switch action {
@@ -15,8 +15,8 @@ func Run(service application.ProductServiceInterface, action string, productID s
 		if err != nil {
 			return result, err
 		}
-		result = fmt.Sprintf("ProductId: %s, ProductName: %s, ProductPrice: %f", 
-			product.GetID(), product.GetName(), product.GetPrice()
+		result = fmt.Sprintf("ProductId: %s, ProductName: %s, ProductPrice: %f",
+			product.GetID(), product.GetName(), product.GetPrice(),
 		)
 	case "enable":
 		product, err := service.Get(productID)
