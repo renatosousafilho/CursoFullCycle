@@ -27,3 +27,47 @@ func (p *ProductDb) Get(id string) (application.ProductInterface, error) {
 	}
 	return &product, nil
 }
+
+func (p *ProductDb) create(product application.ProductInterface) (application.ProductInterface, error) {
+	stmt, err := p.db.Prepare("insert into products(ID, Name, Price, Status) values(?, ?, ?, ?)")
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = stmt.Exec(
+		product.GetID(),
+		product.GetName(),
+		product.GetPrice(),
+		product.GetStatus(),
+	)
+	if err != nil {
+		return nil, err
+	}
+	return product, nil
+}
+
+func (p *ProductDb) update(product application.ProductInterface) (application.ProductInterface, error) {
+	_, err := p.db.Exec("update products set Name = ?, Price = ?, Status = ? where ID = ?",
+		product.GetName(), product.GetPrice(), product.GetStatus(), product.GetID())
+	if err != nil {
+		return nil, err
+	}
+	return product, nil
+}
+
+func (p *ProductDb) Save(product application.ProductInterface) (application.ProductInterface, error) {
+	var rows int
+	p.db.QueryRow("select count(ID) from products where ID = ?", product.GetID()).Scan(&rows)
+	if rows == 0 {
+		_, err := p.create(product)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		_, err := p.update(product)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return product, nil
+}
