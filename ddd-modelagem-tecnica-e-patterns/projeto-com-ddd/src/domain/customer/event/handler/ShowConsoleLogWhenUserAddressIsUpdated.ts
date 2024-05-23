@@ -1,6 +1,6 @@
 import CustomerCreatedEvent from '../CustomerCreatedEvent';
-
-export default class ShowConsoleLogWhenUserAddressIsUpdated {
+import EventHandlerInterface from '../../../@shared/event/EventHandlerInterface';
+export default class ShowConsoleLogWhenUserAddressIsUpdated implements EventHandlerInterface<CustomerCreatedEvent>{
   handle(event: CustomerCreatedEvent): void {
     console.log(`Endereço do cliente ${event.eventData.name} foi atualizado para ${event.eventData.address}`);
   }
