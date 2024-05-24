@@ -31,5 +31,4 @@ func getProduct(service application.ProductServiceInterface) http.Handler {
 			return
 		}
 	})
-
 }
