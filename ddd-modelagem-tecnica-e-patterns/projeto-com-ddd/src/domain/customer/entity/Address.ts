@@ -11,6 +11,7 @@ export default class Address {
     this._city = city;
     this._state = state;
     this._zipCode = zipCode;
+    // this.validate();
   }
 
   validate() {
