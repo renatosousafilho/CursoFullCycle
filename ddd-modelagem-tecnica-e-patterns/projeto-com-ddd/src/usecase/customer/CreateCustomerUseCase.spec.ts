@@ -1,6 +1,6 @@
-import Customer from '../../../domain/customer/entity/Customer';
-import CustomerRepositoryInterface from '../../../domain/customer/repository/CustomerRepositoryInterface';
-import CreateCustomerUseCase from './create.customer';
+import Customer from '../../domain/customer/entity/Customer';
+import CustomerRepositoryInterface from '../../domain/customer/repository/CustomerRepositoryInterface';
+import CreateCustomerUseCase from './CreateCustomerUseCase';
 
 describe('CreateCustomerUseCase', () => {
   let customerRepository: CustomerRepositoryInterface;

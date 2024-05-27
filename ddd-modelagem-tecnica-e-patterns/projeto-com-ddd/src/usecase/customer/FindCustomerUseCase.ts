@@ -1,5 +1,18 @@
-import CustomerRepositoryInterface from '../../../domain/customer/repository/CustomerRepositoryInterface';
-import { InputCustomerDto, OutputCustomerDto } from './find.customer.dto';
+import CustomerRepositoryInterface from '../../domain/customer/repository/CustomerRepositoryInterface';
+interface Input {
+  id: string;
+}
+
+interface Output {
+  id: string;
+  name: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+  }
+}
 
 export default class FindCustomerUseCase {
   private repository: CustomerRepositoryInterface
@@ -8,7 +21,7 @@ export default class FindCustomerUseCase {
     this.repository = repository;
   }
 
-  async execute(input: InputCustomerDto): Promise<OutputCustomerDto> {
+  async execute(input: Input): Promise<Output> {
     const customer = await this.repository.find(input.id);
   
     return {

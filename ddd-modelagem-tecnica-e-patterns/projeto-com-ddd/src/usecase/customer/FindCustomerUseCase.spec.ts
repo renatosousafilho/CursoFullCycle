@@ -1,7 +1,7 @@
-import Customer from '../../../domain/customer/entity/Customer';
-import Address from '../../../domain/customer/entity/value-object/Address';
-import FindCustomerUseCase from './find.customer';
-import CustomerRepositoryInterface from '../../../domain/customer/repository/CustomerRepositoryInterface';
+import Customer from '../../domain/customer/entity/Customer';
+import Address from '../../domain/customer/entity/value-object/Address';
+import FindCustomerUseCase from './FindCustomerUseCase';
+import CustomerRepositoryInterface from '../../domain/customer/repository/CustomerRepositoryInterface';
 
 const customer = new Customer("1", "John Doe");
 const address = new Address("Main Street", 123, "Springfield", "IL", "62701");
@@ -15,8 +15,6 @@ customer.changeAddress(address);
 //     update: jest.fn(),
 //   }
 // }
-
-
 
 describe('test unit find customer use case', () => {
   it('should find a customer', async () => {
