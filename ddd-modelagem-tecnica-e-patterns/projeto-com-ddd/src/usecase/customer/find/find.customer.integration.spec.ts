@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize-typescript";
 import CustomerModel from '../../../infrastructure/customer/repository/sequelize/CustomerModel';
 import CustomerRepository from '../../../infrastructure/customer/repository/sequelize/CustomerRepository';
 import Customer from '../../../domain/customer/entity/Customer';
-import Address from '../../../domain/customer/entity/Address';
+import Address from '../../../domain/customer/entity/value-object/Address';
 import FindCustomerUseCase from './find.customer';
 
 describe('test find customer use case', () => {

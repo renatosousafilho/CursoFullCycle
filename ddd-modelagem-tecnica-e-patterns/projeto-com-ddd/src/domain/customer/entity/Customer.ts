@@ -1,5 +1,5 @@
 import CustomerInterface from './CustomerInterface';
-import Address from './Address';
+import Address from './value-object/Address';
 
 export default class Customer implements CustomerInterface {
   private _id: string;

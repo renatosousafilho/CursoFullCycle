@@ -1,4 +1,4 @@
-import Address from './Address';
+import Address from './value-object/Address';
 
 export default interface CustomerInterface {
   get id(): string;

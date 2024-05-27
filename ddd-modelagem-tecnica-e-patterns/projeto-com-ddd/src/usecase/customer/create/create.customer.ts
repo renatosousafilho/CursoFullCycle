@@ -1,4 +1,4 @@
-import Address from '../../../domain/customer/entity/Address';
+import Address from '../../../domain/customer/entity/value-object/Address';
 import Customer from '../../../domain/customer/entity/Customer';
 import CustomerFactory from '../../../domain/customer/factory/CustomerFactory';
 import CustomerRepositoryInterface from '../../../domain/customer/repository/CustomerRepositoryInterface';

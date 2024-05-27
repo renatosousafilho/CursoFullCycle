@@ -71,21 +71,21 @@ describe('CreateCustomerUseCase', () => {
     await expect(useCase.execute(input)).rejects.toThrow('Name is required');
   });
 
-  // it('should throw an error when street of address is not provided', async () => {
-  //   // Arrange
-  //   const useCase = new CreateCustomerUseCase(customerRepository);
-  //   const input = {
-  //     name: "John Doe",
-  //     address: {
-  //       street: "",
-  //       number: 123,
-  //       city: "Springfield",
-  //       state: "IL",
-  //       zip: "62701",
-  //     }
-  //   };
+  it('should throw an error when street of address is not provided', async () => {
+    // Arrange
+    const useCase = new CreateCustomerUseCase(customerRepository);
+    const input = {
+      name: "John Doe",
+      address: {
+        street: "",
+        number: 123,
+        city: "Springfield",
+        state: "IL",
+        zip: "62701",
+      }
+    };
 
-  //   // Act and Assert
-  //   // await expect(useCase.execute(input)).rejects.toThrow('Street is required');
-  // });
+    // Act and Assert
+    await expect(useCase.execute(input)).rejects.toThrow('Street is required');
+  });
 });

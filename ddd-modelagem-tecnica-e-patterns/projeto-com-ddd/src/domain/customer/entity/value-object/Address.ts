@@ -11,7 +11,7 @@ export default class Address {
     this._city = city;
     this._state = state;
     this._zipCode = zipCode;
-    // this.validate();
+    this.validate();
   }
 
   validate() {
@@ -33,10 +33,6 @@ export default class Address {
 
     if (!this._zipCode) {
       throw new Error('Zip code is required');
-    }
-
-    if (this._zipCode.length !== 8) {
-      throw new Error('Zip code must have 8 characters');
     }
   }
 

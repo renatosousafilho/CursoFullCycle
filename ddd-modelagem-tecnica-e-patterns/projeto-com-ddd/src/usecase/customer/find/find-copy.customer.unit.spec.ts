@@ -1,5 +1,5 @@
 import Customer from '../../../domain/customer/entity/Customer';
-import Address from '../../../domain/customer/entity/Address';
+import Address from '../../../domain/customer/entity/value-object/Address';
 import FindCustomerUseCase from './find.customer';
 import CustomerRepositoryInterface from '../../../domain/customer/repository/CustomerRepositoryInterface';
 
