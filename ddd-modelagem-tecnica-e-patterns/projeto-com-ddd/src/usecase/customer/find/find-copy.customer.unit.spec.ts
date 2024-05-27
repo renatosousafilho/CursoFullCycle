@@ -16,28 +16,25 @@ customer.changeAddress(address);
 //   }
 // }
 
-class MockCustomerRepository implements CustomerRepositoryInterface {
-  create(entity: Customer): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
-  update(entity: Customer): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
-  find(id: string): Promise<Customer> {
-    return Promise.resolve(customer);
-  }
-  findAll(): Promise<Customer[]> {
-    throw new Error('Method not implemented.');
-  }
-  
-}
+
 
 describe('test unit find customer use case', () => {
-  
-
   it('should find a customer', async () => {
     // Arrange
-    const customerRepository = new MockCustomerRepository();
+    const customerRepository = new class implements CustomerRepositoryInterface {
+      create(entity: Customer): Promise<void> {
+        throw new Error('Method not implemented.');
+      }
+      update(entity: Customer): Promise<void> {
+        throw new Error('Method not implemented.');
+      }
+      find(id: string): Promise<Customer> {
+        return Promise.resolve(customer);
+      }
+      findAll(): Promise<Customer[]> {
+        throw new Error('Method not implemented.');
+      }
+    }
     const useCase = new FindCustomerUseCase(customerRepository);
     const input = { id: "1" };
 
@@ -55,5 +52,29 @@ describe('test unit find customer use case', () => {
         zip: customer.address.zipCode,
       }
     });
+  });
+
+
+  it('should throw an error when customer is not found', async () => {
+    // Arrange
+    const customerRepository = new class implements CustomerRepositoryInterface {
+      create(entity: Customer): Promise<void> {
+        throw new Error('Method not implemented.');
+      }
+      update(entity: Customer): Promise<void> {
+        throw new Error('Method not implemented.');
+      }
+      find(id: string): Promise<Customer> {
+        throw new Error('Customer not found');
+      }
+      findAll(): Promise<Customer[]> {
+        throw new Error('Method not implemented.');
+      }
+    };
+    const useCase = new FindCustomerUseCase(customerRepository);
+    const input = { id: "1" };
+
+    // Act / Assert
+    expect(useCase.execute(input)).rejects.toThrow('Customer not found');
   })
 });
