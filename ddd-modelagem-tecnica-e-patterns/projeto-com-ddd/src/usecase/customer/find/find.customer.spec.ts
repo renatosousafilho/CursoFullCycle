@@ -3,6 +3,7 @@ import CustomerModel from '../../../infrastructure/customer/repository/sequelize
 import CustomerRepository from '../../../infrastructure/customer/repository/sequelize/CustomerRepository';
 import Customer from '../../../domain/customer/entity/Customer';
 import Address from '../../../domain/customer/entity/Address';
+import FindCustomerUseCase from './find.customer';
 
 describe('test find customer use case', () => {
   let sequelize: Sequelize;
@@ -34,15 +35,15 @@ describe('test find customer use case', () => {
     const input = { id: "1" };
 
     // Act
-    const output = new FindCustomerUseCase(customerRepository).execute(input);
+    const useCase = new FindCustomerUseCase(customerRepository);
+    const output = await useCase.execute(input);
 
     // Assert
     expect(output).toStrictEqual({
-      id: "1",
+      id: customer.id,
       name: customer.name,
       address: {
         street: customer.address.street,
-        number: customer.address.number,
         city: customer.address.city,
         state: customer.address.state,
         zip: customer.address.zipCode,

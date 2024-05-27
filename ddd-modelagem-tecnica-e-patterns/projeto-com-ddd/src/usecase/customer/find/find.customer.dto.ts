@@ -7,7 +7,6 @@ export interface OutputCustomerDto {
   name: string;
   address: {
     street: string;
-    number: string;
     city: string;
     state: string;
     zip: string;
