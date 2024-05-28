@@ -1,10 +1,9 @@
 import request from 'supertest';
-import app from '../src/infrastructure/api/express';
+import app from '../../src/infrastructure/api/express';
 import { Sequelize } from 'sequelize';
-import SequelizeSingleton from '../src/infrastructure/api/sequelize';
+import SequelizeSingleton from '../../src/infrastructure/api/sequelize';
 
 describe('POST /customer', () => {
-  let sequelize: Sequelize
   beforeEach(async () => {
     await SequelizeSingleton.sync();
   });
@@ -65,5 +64,4 @@ describe('POST /customer', () => {
     expect(response.body.message).toBe('Name is required');
     expect(response.status).toBe(400);
   });
-
 });
