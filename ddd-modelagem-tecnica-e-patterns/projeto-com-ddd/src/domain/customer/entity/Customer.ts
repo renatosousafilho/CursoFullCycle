@@ -1,6 +1,8 @@
 import CustomerInterface from './CustomerInterface';
 import Address from './value-object/Address';
 import Notification from '../../@shared/notification/Notification';
+import CustomerYupValidator from '../../../infrastructure/customer/validator/CustomerYupValidator';
+import CustomerValidator from './validator/CustomerValidator';
 
 export default class Customer implements CustomerInterface {
   private _id: string;
@@ -10,26 +12,23 @@ export default class Customer implements CustomerInterface {
   private _rewardPoints: number = 0;
 
   private _notification: Notification;
+  private _validator: CustomerValidator;
 
-  constructor(id: string, name: string) {
+  constructor(id: string, name: string, validator: CustomerValidator = new CustomerYupValidator()) {
     this._id = id;
     this._name = name;
     this._notification = new Notification();
+    this._validator = validator;
 
     this.validate();
 
-    if (this._notification.hasErrors()) {
+    if (this._notification.hasErrors()) {  
       throw new Error(this._notification.messages('customer'));
     }
   }
 
   validate() {
-    if (this._id.length === 0) {
-      this._notification.addError('ID is required', 'customer');
-    }
-    if (!this._name) {
-      this._notification.addError('Name is required', 'customer');
-    }
+    this._validator.validateCreateCustomer(this);
   }
 
   changeName(name: string) {
@@ -73,5 +72,9 @@ export default class Customer implements CustomerInterface {
 
   get address() {
     return this._address;
+  }
+
+  get notification() {
+    return this._notification;
   }
 }

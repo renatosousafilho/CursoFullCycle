@@ -1,17 +1,25 @@
 import Address from './value-object/Address';
 import Customer from './Customer';
+import CustomerYupValidator from '../../../infrastructure/customer/validator/CustomerYupValidator';
+import CustomerJoiValidator from '../../../infrastructure/customer/validator/CustomerJoiValidator';
 
 describe("Customer", () => {
-  it("should thrown an error if the name is empty", () => {
-    expect(() => new Customer("1", "")).toThrowError("customer: Name is required");
+  it.only("should thrown an error if the name is empty", () => {
+    // const validator = new CustomerYupValidator();
+    const validator = new CustomerJoiValidator();
+    expect(() => new Customer("1", "", validator)).toThrowError("customer: Name is required");
   });
 
   it("should thrown an error if the id is empty", () => {
-    expect(() => new Customer("", "John Doe")).toThrowError("customer: ID is required");
+    // const validator = new CustomerYupValidator();
+    const validator = new CustomerJoiValidator();
+    expect(() => {new Customer("", "John Doe", validator)}).toThrowError("customer: ID is required");
   });
 
   it("should thrown an error if the id is empty and the name is empty", () => {
-    expect(() => new Customer("", "")).toThrowError("customer: ID is required,customer: Name is required");
+    // const validator = new CustomerYupValidator();
+    const validator = new CustomerJoiValidator();
+    expect(() => new Customer("", "", validator)).toThrowError("customer: ID is required,customer: Name is required");
   });
 
   it("should change the name", () => {
