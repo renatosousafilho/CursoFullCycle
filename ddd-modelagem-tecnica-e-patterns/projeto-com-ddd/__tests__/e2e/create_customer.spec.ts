@@ -61,7 +61,7 @@ describe('POST /customer', () => {
       .send(customer);
 
     // Assert
-    expect(response.body.message).toBe('Name is required');
+    expect(response.body.message).toBe('customer: Name is required');
     expect(response.status).toBe(400);
   });
 });

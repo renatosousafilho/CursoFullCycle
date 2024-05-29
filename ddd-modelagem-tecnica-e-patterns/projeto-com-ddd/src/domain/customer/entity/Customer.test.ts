@@ -3,11 +3,15 @@ import Customer from './Customer';
 
 describe("Customer", () => {
   it("should thrown an error if the name is empty", () => {
-    expect(() => new Customer("1", "")).toThrowError("Name is required");
+    expect(() => new Customer("1", "")).toThrowError("customer: Name is required");
   });
 
   it("should thrown an error if the id is empty", () => {
-    expect(() => new Customer("", "John Doe")).toThrowError("ID is required");
+    expect(() => new Customer("", "John Doe")).toThrowError("customer: ID is required");
+  });
+
+  it("should thrown an error if the id is empty and the name is empty", () => {
+    expect(() => new Customer("", "")).toThrowError("customer: ID is required,customer: Name is required");
   });
 
   it("should change the name", () => {

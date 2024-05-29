@@ -1,5 +1,6 @@
 import CustomerInterface from './CustomerInterface';
 import Address from './value-object/Address';
+import Notification from '../../@shared/notification/Notification';
 
 export default class Customer implements CustomerInterface {
   private _id: string;
@@ -8,18 +9,26 @@ export default class Customer implements CustomerInterface {
   private _active: boolean = false;
   private _rewardPoints: number = 0;
 
+  private _notification: Notification;
+
   constructor(id: string, name: string) {
     this._id = id;
     this._name = name;
+    this._notification = new Notification();
+
     this.validate();
+
+    if (this._notification.hasErrors()) {
+      throw new Error(this._notification.messages('customer'));
+    }
   }
 
   validate() {
-    if (!this._name) {
-      throw new Error('Name is required');
-    }
     if (this._id.length === 0) {
-      throw new Error('ID is required');
+      this._notification.addError('ID is required', 'customer');
+    }
+    if (!this._name) {
+      this._notification.addError('Name is required', 'customer');
     }
   }
 
@@ -28,7 +37,7 @@ export default class Customer implements CustomerInterface {
   }
 
   activate() {
-    if (this._address === undefined) {
+    if (!this._address) {
       throw new Error('Address is mandatory to activate the customer');
     }
     this._active = true;
