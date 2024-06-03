@@ -62,5 +62,19 @@ describe('GET /customer', () => {
       zip: '30130-007'
     });
 
+    const responseXML = await request(app)
+      .get('/customer')
+      .set('Accept', 'application/xml')
+      .send();
+    expect(responseXML.status).toBe(200);
+    expect(responseXML.text).toContain('<?xml version="1.0" encoding="UTF-8"?>');
+    expect(responseXML.text).toContain(`<customers>`);
+    expect(responseXML.text).toContain(`<customer>`);
+    expect(responseXML.text).toContain(`<name>John Doe</name>`);
+    expect(responseXML.text).toContain(`<name>Jane Doe</name>`);
+    expect(responseXML.text).toContain(`</customers>`);
+    expect(responseXML.text).toContain(`</customer>`);
+
+
   });
 });

@@ -5,7 +5,7 @@ interface Input {
 
 }
 
-interface Output {
+export interface ListCustomersUseCaseOutput {
   customers: {
     id: string;
     name: string;
@@ -26,7 +26,7 @@ export default class ListCustomersUseCase {
     this.repository = repository;
   }
 
-  async execute(input: Input): Promise<Output> {
+  async execute(input: Input): Promise<ListCustomersUseCaseOutput> {
     const customers = await this.repository.findAll();
 
     return {
